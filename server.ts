@@ -60,10 +60,13 @@ async function startServer() {
   app.post("/api/login", (req, res) => {
     const { username, password } = req.body;
     if (username === ADMIN_USER && password === ADMIN_PASS) {
+      // Detect if we are in AI Studio (requires secure/none) or local (requires lax/no-secure for HTTP)
+      const isAistudio = req.headers.host?.includes("run.app");
+      
       res.cookie("auth_token", AUTH_TOKEN, { 
         httpOnly: true, 
-        secure: true, 
-        sameSite: 'none',
+        secure: !!isAistudio, // Only true if on HTTPS (AI Studio)
+        sameSite: isAistudio ? 'none' : 'lax',
         maxAge: 24 * 60 * 60 * 1000 // 24 hours
       });
       res.json({ success: true });
