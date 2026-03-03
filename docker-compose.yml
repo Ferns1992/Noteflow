@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    ports:
+      - "4010:4010" # Maps host port 4010 to container port 4010
+    volumes:
+      - ./data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=4010
+      - DB_PATH=/app/data/data.db
+    restart: always

@@ -1,0 +1,5 @@
+{
+  "name": "NoteFlow & Calendar",
+  "description": "A unified workspace for managing your notes and calendar events with local persistence.",
+  "requestFramePermissions": []
+}
